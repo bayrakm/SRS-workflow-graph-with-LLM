@@ -1,0 +1,292 @@
+Unnamed: 0,RequirementText
+0,Numbered lists under a given [CISS-number] requirement shall be understood as individual requirements.
+1,"Requirements stating a capability to be ""supported"" shall be understood as feature or capability that shall be inherently available within the design and the assets in its full extent, without restrictions that feature or capability can be enabled and disabled at any time by the Purchaser."
+2,"Requirements stating a capability to be ""supported"" shall be understood as feature or capability that shall be inherently available within the design and the assets in its full extent, without restrictions that feature or capability can be enabled and disabled at any time by the Purchaser."
+3,"Requirements stating a capability to be ""implemented"" shall be understood as a feature or capability that shall be available within the design and the assets in its full extent, without restrictions that feature or capability shall be delivered activated and configured for use in the delivered system."
+4,The CISS shall implement all mandatory Requirements and Rules as identified by MUST clauses in [4559-Ed4/AEDP-18].
+5,The CISS shall for all applicable CSD Stream Server XML schema definition (XSD) files and Web Services Description Language (WSDL) files use the 4. 4 versions (see Table 3-1 in [4559-Ed4/AEDP-18]).
+6,The CISS shall as a minimum implement the metadata attributes as defined in Table 4.
+7,"The CISS implementation of Forward Compatibility shall ensure that all extensions are persisted, forwarded to replication partners ( in Bridgehead Routing), and delivered to clients as part of query response."
+8,The CISS shall implement the CSD Query Service Interface in accordance with [4559-Ed4/AEDP-18].
+9,The CISS shall enable clients to query against all queryable stream service metadata data as defined in Table 4.
+10,The CISS shall throw a BadQuery exception when receiving a query that queries against any other metadata attributes beyond the attributes listed as queryable in Table 4.
+11,The CISS shall implement sorting of query result enabling the query results to be sorted on any of the sortable metadata attributes as defined in Table 4.
+12,The CISS shall ignore a sorting request on any attribute that is not listed as sortable in Table 4.
+13,"In addition to the getCapabilities mandatory capabilities as defined in [4559- Ed4/AEDP-17] and the [4559-Ed4/AEDP-18], the CISSs implementation of the stream query service shall report on two additional capabilities as shown in Table 5."
+14,The CISS shall implement the advanced search mechanism that identifies one or many sub-streams with the stream that matches the query result.
+15,The CISS shall distinguish the different sub-streams with start and end times asprovided in the stream metadata.
+16,The CISS shall use the urn:majiic:description:local part of the URI returned by the getQueryResultSegment to encode the time range of the sub-streams.
+17,In case the query results in multiple sub-streams then the dynamic attributes of the query result shall be fused in accordance with the rules specified in [4559- Ed4/AEDP-18].
+18,The CISS shall have support for populating the NSILSTREAM. sourceURL attribute with an HTTP URL through which the stream or sub-stream data can be downloaded.
+19,"The CISS shall, when providing a URL to a client application for it to download sub stream data, construct a URL that point to the same subset of the stream as indicated in the sub stream metadata."
+20,The CISS shall implement query algorithms that can to some degree counteract low update rate of the coverage area ( performing queries on convex hulls between each pair of recorded coverage areas as depicted in Figure 4).
+21,"The CISS shall implement WS-Notification subscription in accordance with [4559-Ed4/AEDP-19], and subscribe to sensor stream declarations as described in [4559-Ed4/AEDP-18]."
+22,"Upon receiving an STOP STREAM notification message (serialized CSD stream metadata,seeTable4,whereNSILCARD. statusOBSOLETE)theCISSshall identify the corresponding streaming product and close the stream product for further updates."
+23,"The CISS shall be manually configurable (through the CISS User Interfaces, see section 2. 5) to listen to a set of ports where live streaming may occur."
+24,"The CISS shall implement collecting, recording and cataloguing (this includes extracting and storing all relevant metadata) stream data of video streams and ground moving target indicator streams."
+25,"The CISS shall be able to receive streams sent over user datagram protocol(UDP) unicast, broadcast and multicast."
+26,The CISS shall be able to detect that a sensor is no longer streaming and close the stream product.
+27,The CISS shall never re-open a stream that has been declared as stopped/ closed.
+28,"The CISS shall, when recording GMTI and video streams, extract and record sensor footprint geo-spatial information (area covered on the ground) with the timestamps as part of the stream metadata and the CISS shall use this collected set of detailed geo-spatial information for fine-grained/ precise search operations."
+29,The CISS shall when decoding the coverage metadata extracted from the data streams ignore and discard all coverage data that does not comply with the format rules as defined by STANAG 4609 (for video) and by STANAG 4607 (for GMTI).
+30,The CISS shall support import of streams from files of recorded video streams in STANAG 4609 format.
+31,The CISS shall support import of streams from files of recorded GMTI streams inSTANAG 4607 format.
+32,The CISS file import mechanism shall support single-file import and multiple-file (bulk) import.
+33,The CISS that imports a stream from a file shall become the source streaming server for the stream - that means setting its own library name into the NSILCARD. sourceLibrary metadata attribute.
+34,"The CISS shall inform peers any about changes (including a final notification with status Obsolete), as a result of local interactions, to the persisted state of a replicable streams by sending a replication message to the peers using the put operation from WS Transfer [W3C WS-transfer, 2006]."
+35,The CISS shall implement runtime dynamic configurability of the remote CSDStream Server replication peers (outbound and inbound).
+36,The replication message that the CISS sends to its peers shall be a serialization of the CSD Stream Metadata Model as defined by Table 4.
+37,The CISS shall use an outgoing asynchronous pattern i. e. loosely coupled dispatch of the replication messages outgoing to other CSD stream server instances.
+38,The CISS outbound replication queues shall be unbounded (unlimited in size)and durable ( the queues are persisted across restarts of the CISS).
+39,The CISS usage of outbound replication queues shall be implemented in such a way that messages are not blocked/ stuck in the queue due to an offline replication peer.
+40,If a replication peer cannot be reached ( it is temporarily offline or there is a network outage) the messages to this peer shall accumulate in the queue and remain in the queue and then transmitted later when the replication peer is again available.
+41,The CISS shall not remove a message from an outbound queue before the receiving peer has confirmed that it has successfully received the message and stored it locally in its inbound queue (if the message is transported over HTTP a successful transmission is ensured once a HTTP status code of 200 is received by the sending CISS).
+42,The CISS shall use an incoming asynchronous pattern.
+43,The CISS usage of inbound replication queues shall be implemented in such a way that a burst of messages from one replication partner does not significantly impact message coming in from other replication peers.
+44,The CISS shall upon receiving an incoming replication message store it onto the inbound queue for the peer sending the message before responding to the sending peer and acknowledging a successful receipt of the message.
+45,If for some reason the receiving CISS is not able to store the received message onto the inbound queue then the receiving CISS shall respond with an exception.
+46,The CISS shall minimize the size of the replication message focussing on the change (delta) in the metadata since the last replication message for the stream.
+47,After the CISS detects that the stream is closed the CISS shall send one last replication message that shall as a minimum contain the attributes listed in Table 7.
+48,The CISS shall be able to send a replication message each time the persisted value of the NSILCOVERAGE. spatialGeographicReferenceBox attribute changes as long as the frequency of the replication messages does not exceed 1 message per second.
+49,The CISS shall implement configurability of the replication message frequency where the maximum supported frequency is 1 message per second.
+50,"As the CISS only can expect to receive the dynamic (changing) metadata attributes through the replication mechanism the CISS shall upon receiving the first replication message for a (new) stream, query the source streaming server for additional metadata attribute values."
+51,"When stream locally recorded at the CISS is removed the CISS shall send out a replication message with the attributes as defined in Table 9. f a CISS is receiving replication messages with unknown metadata attributes (i. e. not defined by Table 4) the CISS shall only extract and use the attributes defined in Table 6 to update its own cataloguing metadata and ignore all other attributes, including the unknown attributes."
+52,When a CISS is located in a replication topology to forward received replication messages it shall not make any changes to the payload of the received replication message before forwarding to peer replication CSD stream servers.
+53,If the replication topology is not a full mesh and the CISS is positioned as part of a chain of replicating peers the CISS shall forward incoming replication messages to subsequent peer(s) in the replication chain.
+54,The CISS shall send replication messages pertaining to the same stream (i. e. having same Catalog Entry identifier) in increasing temporal order.
+55,Note the ordering of replication messages between different streams (i. e. different Catalog Entry identifiers) is not defined.
+56,The CISS shall maintain a mapping from library identifier to the CSD stream controller service interface endpoint (in another CISS or national CSD stream server) through which streams with that source library identifier value may be accessed.
+57,When participating in a network of replicating CISS instances and national CSD stream servers the CISS shall support multiple synchronization topologies.
+58,The CISS shall implement Bridgehead Routing as defined in [4559-Ed4/AEDP- 18].
+59,The CISS shall implement a configurable localizing mechanism that downloads recorded streams belonging to replicated stream metadata from other CISS instances and national CSD stream servers (for details on the configuration of this function see section 2. 3).
+60,The CISS replication mechanism (see requirements in section 2. 2. 3) shall also support replication over SATCOM links.
+61,The CISS shall when downloading a stream from a remote CISS (pending that the remote CISS exposes the download URL) make use of a SATCOM adapted communication mechanism to ensure successful retrieval of the file at the minimum possible download time for the available bandwidth.
+62,The CISS shall include a mechanism for pushing stream files over a SATCOM link to a remote CISS using a bandwidth aware service that sends data using idle bandwidth ( using Microsoft Background Intelligent Transfer Service (BITS)).
+63,The receiving CISS shall add the received steam files to its set of localized stream files.
+64,"The CISS shall be able to package up a completed/ closed stream recording with stream metadata in an IFAS-12 message (see [CO-12940-OPL-RSID], [CSD- XDomain], and [IFAS12] for details) and push the package to the NATO Release Server (the Release Server will then manage the cross domain exchange across the IEG)."
+65,"The CISS shall, after fully localizing an entire replicated stream from the source stream server, be able to package up the localized stream with stream metadata in a IFAS-12 message (see [CO-12940-OPL-RSID], [CSD-XDomain], and [IFAS12] for details) and push the package to the NATO Release Server (the Release Server will then manage the cross domain exchange across the IEG)."
+66,The cross-domain export function in the CISS shall be customizable.
+67,The CISS shall be able to receive and import recorded streams delivered by the NATO Release Server in the IFAS-12 format.
+68,After the import the stream shall be included in the CISSs stream catalogue as a fully localized stream.
+69,The CISS shall enable a System Administrator to export historic stream metadata for a specified time window into synchronization files in accordance with the description in [4559-Ed4/AEDP-18].
+70,The CISS shall be able to import and populate its own catalogue metadata from historic stream metadata synchronization files in accordance with [4559- Ed4/AEDP-18].
+71,The CISS shall upon import check if the stream already exist in its repository andprevent overwriting or duplication of existing stream data.
+72,The CISS shall support archiving of any stream.
+73,"For streams that are archived the full metadata set shall remain available for querying, and only the stream data files shall be moved to off-line storage."
+74,"The CISS shall when archiving a stream record the archiving information in the metadata attributes NSILSTREAM. archived and NSILSTREAM. archiveInformation, and then send a replication message to its peer streaming servers reporting that the stream has been archived. the replication message shall include the two stream archiving attributes (NSILSTREAM. archived and NSILSTREAM. archiveInformation)."
+75,The CISS shall support re-importing an archived stream from offline storagemedia.
+76,The CISS shall implement the Stream Controller Interface as defined by [4559- Ed4/AEDP-18].
+77,"The CISS shall when reporting on the supported replay types for the system. supportedReplayTypes capability report a comma separated list that includes all three defined replay types (BROADCAST, MULTICAST, UNICAST)."
+78,The CISS shall when reporting on the supported stream types for the system. supportedStreams capability report a comma separated list that includes GMTI and VIDEO.
+79,"When a client application requests the CISS to relay or replay a local stream (i. e. the CISS is already directly receiving it on the network, or it has already recorded the stream) the CISS shall Return a replay identifier to the client. the CISS shall Relay or replay the requested stream using the parameters specified by the client application."
+80,Upon receiving a stop replay command (containing the replay identifier) the CISSwill stop relaying or replaying the stream.
+81,"The CISS shall when it is receiving a stream from another CISS or a national CSD stream server (during replay or relay), and local caching mechanism has been enabled, store a local copy of the received stream."
+82,The CISS shall for future replay-requests of the particular stream use its local copy of the stream.
+83,The CISS shall be able to replay (or relay) all of its recorded streams (see section 2. 1. 3).
+84,"I. e. if the CISS can record a stream, then it shall also be able to replay or relay it."
+85,"The CISS shall include a video conditioning service for streaming video using Dynamic Adaptive Streaming over HTTP (DASH), i. e."
+86,MPEG-DASH (ISO/IEC 23009-1:2012) protocol.
+87,The CISS DASH streams shall be made available in a minimum of three different bit rates.
+88,"The CISS video conditioning service shall implement a mechanism that delivers the video metadata as extracted from the STANAG 4609 KLV metadata in the stream in a manner that enables a HTML5 enabled Web client application in real time to synchronize the received stream metadata with the video streams received over the DASH protocol. the KLV metadata shall be delivered in a timely manner corresponding to the video stream delivered over DASH, and where the KLV metadata is timestamped in such a way that correlation of KLV metadata to the video is possible."
+89,The CISS video conditioning service shall be able to use different video sources as input to its DASH streaming service.
+90,"The CISS Operational Monitoring user interface shall, using the video conditioning service providing DASH streaming to web clients (see section 2. 4), support preview of video streams."
+91,This preview shall show the video and synchronously display the KLV metadata in the video stream.
+92,The CISS video preview module shall adapt to effective network bandwidth anduse the optimal set of DASH files for the available bandwidth.
+93,The CISS shall timestamp each event with date and time of the event occurring.
+94,The collected CISS performance statistics and recorded events shall be conveyed to a Service Quality Management (SQM) Application using TM Forum Service Quality Management REST Specification R16. 5. 1.
+95,The CISS shall also have support for writing the APM reports defined in thissection to file in a structured format.
+96,"It shall be possible to configure the CISS to either push the APM reports to the SQM endpoints (see [CISS-103]), or to files (see [CISS-104]), or to both."
+97,"The CISS, when populated with 1 hour of video and 1 hour of GMTI stream data that is catalogued with the high resolution geo-reference and timestamp metadata, shall within 0. 5 second respond to any single query using a geo- spatial element, a temporal element, and stream type element and where the CISS executes an advanced search (see [CISS-16]) and returns sub-streams."
+98,"The CISS, when populated with 1 hour of video and 1 hour of GMTI stream data that is catalogued with the high resolution geo-reference and timestamp metadata, shall be able to process and respond to all of 5 parallel queries within 1. 0 second where all queries include a geo-spatial element, a temporal element, and stream type element and where the CISS execute advanced searches (see [CISS-16]) and returns sub-streams."
+99,"The CISS, when populated with 500 hours of video and 500 hours of GMTI stream data that is catalogued with the high resolution geo-reference and timestamp metadata, shall within 1 second respond to any single query using a geo-spatial element, a temporal element, and stream type element and where the CISS executes an advanced search (see [CISS-16]) and returns sub- streams."
+100,"The CISS, when populated with 500 hours of video and 500 hours of GMTI stream data that is catalogued with the high resolution geo-reference and timestamp metadata, shall be able to process and respond to all of 5 parallel queries within 2 seconds where all queries include a geo-spatial element, a temporal element, and stream type element and where the CISS execute advanced searches (see [CISS-16]) and returns sub-streams."
+101,"For situations where the number of concurrent stream recordings is within thespecified CISS capacity (see section 3. 1. 1. 3) the CISS shall, for all of the receiving streams, be able to extract, catalogue, store stream data, and send a replication message within 1 second of receiving the streaming data."
+102,The CISS shall meet the performance requirements as defined by [CISS-106] through [CISS-110] for at least 99. 5% of its Operational Time.
+103,"The CISS shall, when running in a virtualized environment provisioned with 16 GB memory and 12 (2x6) vCPU with up to 500 hour of video and 500 hour of GMTI catalogued stream data and an average of 5 concurrent users, comply with the performance requirements as defined by [CISS-106] through [CISS-110] for 99. 5% of its Operational time without any Critical Failure."
+104,"The CISS shall with sufficient resource provisioning, and potentially in a scaled- out configuration, at a minimum be able to manage up to 10,000 hours of video and 10,000 hours of GMTI recorded and catalogued stream data, without any critical failure for at least 99. 5% of its Operational time."
+105,"The CISS shall able to provide a throughput of up to 475,200 replication messages per day, without any critical failure for at least 99. 5% of its Operational time."
+106,"The CISS shall be able to concurrently record 24 video streams and 8 GMTI streams where the CISS extracts and catalogues timestamp and geo-spatial metadata from the streams and send out replication messages in accordance with requirements in section 2. 2. 3), without any critical failure for at least 99. 5% of its Operational time."
+107,"The CISS shall be able to concurrently restream 48 video streams and 16 GMTI streams from its catalogue of recorded streams onto a local network over UDP (unicast, broadcast, or multicast), without any critical failure for at least 99. 5% of its Operational time. 4) shall, when streaming the video in the original bitrate, as a minimum be able to support DASH streaming to 20 concurrent web client applications, without any critical failure for at least 99. 5% of its Operational time."
+108,"The video conditioning service shall, when it also needs to transcode to another bitrate, be able to support DASH streaming to two concurrent web client applications, without any critical failure for at least 99."
+109,"The CISS shall coexist (i. e. , work correctly and not adversely impact other applications) with Bi-SC AIS standard Anti-Virus software without any critical failure for the 99. 5% of its Operational Time."
+110,"The CISS shall be capable of operating within the NS and MS WAN environment (including servers, network, services and workstations) in the presence of the latest approved NATO Security Settings (target version to be provided by the Purchaser during the Design Stage), without any critical failure for 99. 5% of its operational time."
+111,"The CISS shall be fully interoperable with national CSD stream servers and stream consumer clients that are compliant with the [4559-Ed4/AEDP-18] such that the CISS is able to replicate all stream metadata to the national CSD stream servers, receive replication messages from the national CSD stream servers, and enable national CSD stream consumer clients to query the CISS and request streams from the CISS, without any critical failure for at least 99. 5% of its Operational time."
+112,"The CISS shall use ""UK English"" as the default language."
+113,"The CISS User Interfaces shall work on the principle of ""visibility"" which means the application shows users whatever they need for the current task without distracting or overwhelming them with unrelated tasks or options."
+114,"The CISS User Interfaces shall filter user-accessed information according to the users authorisation, so that users can only see what they are allowed to view and/or change (including both data and functionality)."
+115,The CISS User Interfaces shall be minimised according to what the user can do.
+116,"The CISS User Interfaces shall only show functionality ( menu items, buttons, selections) that is appropriate to the situation based on user role and permissions and object status."
+117,"The CISS User Interfaces shall provide Breadcrumbs on the interfaces to reflect ""where I am now in the system""."
+118,The CISS User Interfaces shall keep page size limited on one screen in order to reduce the need for scrolling to see the submit button.
+119,"In the CISS User Interfaces, scrolling bars (i. e. , horizontal and vertical) shall beavailable when information does not fit onto one screen."
+120,"Where data entry in the CISS User Interfaces is permitted only in prescribed areas, a clear visual definition of the entry fields shall be provided."
+121,The CISS User Interfaces shall for all icons support screen tips that offer addedexplanation and assistance.
+122,The CISS User Interfaces shall use domain terminology consistent with this System Requirement Specification and other NATO documents.
+123,"Labels in the CISS User Interfaces shall be context-dependent, meaningful anddescriptive to the function or action at hand."
+124,"The CISS User Interfaces shall clearly identify all time values as Zulu (, 0815Z)."
+125,The CISS User Interfaces shall represent all date/time data according to ISO8601.
+126,All CISS User Interface windows shall display a header line showing a Classification Bar that dynamically is updated to displaying the highest classification of the information in the window.
+127,The CISS User Interfaces shall be tolerant to input errors.
+128,The CISS User Interfaces shall provide Error Management capability which is readily distinguishable from other displayed information ( Pop-up Error Window).
+129,The CISS User Interfaces shall provide the users with meaningful error messages and information about the actions they need to take in order to fix or at least to report the problem.
+130,"The CISS User Interfaces shall notify the user who has initiated an action that processing of the action has started and convey the sense of processing progress (by means of a progress indicator, dialog boxes)."
+131,"The CISS User Interfaces shall, when response time can be expected to deviate considerably from the response time expected by the user, provide the user with information."
+132,"The CISS User Interface control actions shall be simple and direct, whereas potentially destructive control actions shall require extended user attention such that they are not easily acted on (, ""are you sure"" queries)."
+133,The CISS User Interfaces shall support editing of displayed information in alogical order.
+134,The CISS User Interfaces forms shall allow navigation using the tab key in a logical order.
+135,Tab order shall represent the same logical order shown on screen.
+136,The CISS User Interfaces shall support copying and pasting from otherapplications via the Clipboard.
+137,The CISS User Interfaces shall support normal MS Windows Accelerators.
+138,"The CISS User Interfaces shall support text selection by pointing device (click,drag)."
+139,The CISS User Interfaces shall display the expected input format on all form fields to the user if the label is not clear enough ( date input format - ddmmyyyy or dd-mm-yyyy).
+140,"The CISS User Interfaces shall be tolerant to the delimiters of input format, including Date format ( dd-mm-yyyy could also be entered as ddmmyyyy or d-m-yy without error or picked from a calendar) and Location format ( latitude/longitude could be entered as degrees-minutes-seconds or degrees. decimal degrees)."
+141,"For all attributes related to geographic coordinates, the CISS User Interfaces shall allow the user to enter geographic coordinates in a single text field (not requiring the user to copy/paste more than once to input a geographic value)."
+142,"The CISS User Interfaces shall implement a Help function, which shall provide the type and level of information the user requires to execute a task or solve a problem."
+143,"The CISS User Interface shall implement Tool Tips for all controls, which can benefit from a text description, especially those that do not have a text label."
+144,The CISS shall ensure that all User input values are validated before they are used.
+145,The CISS User Interface shall comply with NCI Agency Human Machine Interface (HMI) Style Guide.
+146,Visual elements and interaction schemes of the CISS User Interfaces shall be reused on similar functions and features.
+147,The CISS User Interfaces shall be based on a single theme where a commonlook and feel is carried across all the User Interfaces.
+148,The CISS User Interfaces shall use a consistent font across all user interfaces.
+149,The CISS User Interface shall comply with the following font usage rules:.
+150,The CISS User Interfaces shall always ensure sufficient contrast between foreground and background colour ( using recommendations from Web Content Accessibility Guidelines (WCAG)).
+151,"The CISS User Interface shall use suitable, intuitive, and whenever possiblecommonly used metaphors for the icons/functions,  as shown in Figure 7."
+152,The CISS User Interface shall not reuse a label/icon metaphor for multiple actions.
+153,"In order to measure learnability, the Contractor shall prepare and propose a set of maximum 10 Learnability Tasks for the Purchaser to approve."
+154,The Learnability tasks shall not take more than 2 hours to be executed.
+155,"The CISS shall clearly identify time values as Zulu (, 0815Z) in all logs."
+156,The CISS shall represent all date/time data in all log files according to ISO 8601.
+157,The CISS generate and retain an Audit Log for events.
+158,All errors and faults in CISS shall be recorded in an Error Log.
+159,"The CISS shall generate and maintain an Audit Log for each of the following auditable events, shall associate individual User identities to those events, and shall include date and time of the event, type of event, User identity, and the outcome (success or failure) of the event:."
+160,The CISS shall log a memory dump of the CISS executable when it crashes.
+161,In CISS audit tracing shall be permanently effective.
+162,The CISS error and change logs shall contain required information in order to provide the support staff with interpretable and comprehensive information about the cause and nature of the error/change.
+163,The CISS shall allow an administrator to select the events to be logged.
+164,"The CISS shall allow configuration of logging verbosity, and disabling of various types of logging."
+165,CISS Error Log and Audit Log shall contain all required information in order to provide the support staff with interpretable and comprehensive information about the cause and nature of the error/change.
+166,"The CISS shall provide a log analysis and reporting tool, to enable browsing, searching and reporting on logs, based on combinations of search criteria across all fields in the log record format."
+167,The CISS shall limit the number of requests (queries and downloads) a client can have active at any one time.
+168,"In order to measure Operability, the contractor shall prepare and propose a set of maximum 10 Operability Tasks for the Purchaser to approve."
+169,The Operability Tasks (test) shall not take more than 2 hours to be executed.
+170,A minimum of 80% of the Operability Tasks shall be successfully executed by at least 80% of the designated users within the time allocated for the Operability Tasks (test).
+171,The CISS system shall exhibit a Mean Time Between Failures (MTBF) characteristics of 720 Hours as a minimum.
+172,The CISS system shall exhibit a Mean Time Between Critical Failures (MTBCF)characteristics of 8760 Hours as a minimum.
+173,The CISS shall have an Inherent Availability of at least 99. 5%.
+174,The CISS shall have a Mission Inherent Availability of at least 99. 97%.
+175,"For 99% of the possible Failure in any of the CISS services, the system shall be able to recover the service or switch to an alternative service, in no more than the amount of Recovery Time defined in Table 10, without loss of data."
+176,The CISS shall support disaster-recovery solutions.
+177,"For 99% of the possible Failure in any of the CISS services, the system shall be able to recover the service or switch to an alternative service, in no more than the amount of Recovery Time defined in Table 10, without loss of data."
+178,"In the event a service is interrupted because of a Failure, the CISS shall, (utilizing ITM IaaS services) be able to restore the CISS state without loss of any data for 99. 5% of the time without any failure in less than the recovery time defined in Table 10."
+179,"In the event of a user erroneously deleting CISS content, the CISS shall (utilizing ITM IaaS backup services) be able to recover the deleted CISS content data for 99. 5% of the time without any failure."
+180,The CISS shall implement confidentiality protection to all its data.
+181,"The CISS shall not rely on the secrecy of identification information (i. e. , IDs) for protection."
+182,The CISS shall support Transport Layer Security (TLS) such that the CISS can run all its communication over cryptographic protocols.
+183,"The CISS shall have support for protection against sharing links (URLs) to products in the CISS repository through mechanisms like a cookie, or session token."
+184,If the CISS makes use of temporary folders to serve up data to clients then the CISS shall have support for protecting this data so that is will only be accessible for the client requesting the data.
+185,The CISS shall prevent forced browsing past access control checks.
+186,"The CISS shall prevent ""path traversal"" past access control checks."
+187,"The CISS shall perform validation of all headers, cookies, query strings, form fields and hidden fields."
+188,The CISS shall ensure that the HTTP TRACE method is turned off on all web servers to prevent compromise of cookie data.
+189,The CISS shall encode User-supplied output to prevent XSS.
+190,Best practice suggests conversion of characters in the table below to the appropriate HTML entity encoding.
+191,"The CISS shall constrain the input by validating it for type, length, format and range."
+192,The CISS shall use type-safe SQL parameters.
+193,"The CISS shall use filter routines that sanitise the code, adding escape characters that have special meaning to SQL."
+194,The CISS shall ensure that application code which accepts input from Users via HTTP requests provides appropriate size checking on all inputs.
+195,The CISS shall use custom error pages to prevent server error messages from being disclosed.
+196,The CISS shall secure stored information (Data at rest) using appropriate mechanisms.
+197,The CISS shall properly apply selected asymmetric encryption mechanisms (TLS and SQL server security mechanisms) according to the standards approved by NATO Communication and Information Agency and NATO INFOSEC to protect information and credentials.
+198,The CISS shall securely configure and enforce file permissions.
+199,"The CISS shall prevent compromise of information via client-side caching,including best practice use of mechanisms such as HTTP headers and metatags."
+200,The CISS shall only expose the absolute minimum number of services and open ports that are required for the CISS services to function correctly.
+201,The CISS security mechanisms shall be properly configured according to best practices.
+202,"Any components based on FOSS shall be verified for compliance to other non- functional requirements, including security requirements."
+203,The CISS shall use the details of the logged-in User to maintain the audit traceability.
+204,The CISS shall log CISS administrator authentications (preferable to a log-filethat cannot be manually modified by the CISS administrator).
+205,The CISS shall log all activities/changes made by CISS administrator (preferable to a log-file that cannot be manually modified by the CISS administrator).
+206,The CISS shall archive the audit log after period of time as configured by the administrator.
+207,The CISS shall implement Identification and Authentication (IA) for identifying and authenticating Users.
+208,The CISS users shall be authenticated with appropriate security mechanismsimplementing or supporting Single Sign On (SSO) (see also next point).
+209,"In case CISS is implemented using a solution based on the Windows operating System, the CISS user accounts shall be declared in an Active Directory inheriting NATO Group Policy Object [GPO] declared at the network domain level for password policy ( complexity, history, minimum age, maximum age, length)."
+210,The password shall not be echoed on the display when a user logs on to the CISS user interface.
+211,The CISS user interface shall limit the number of failed access attempts inaccordance with NATO policy ( 3 failed attempts. ).
+212,"When a User is authenticated, the User shall be assigned with the Roles for that User."
+213,The CISS shall ensure that privilege restrictions of authenticated Users areproperly enforced.
+214,The CISS shall allow only System Administrators to operate CISS System Management Functionality and CISS System Maintenance Functionality with appropriate operating system rights.
+215,Access controls shall ensure that users cannot access functions beyond thoseneeded to execute their role.
+216,The CISS shall limit the feedback of information during authentication to prevent users gaining knowledge of the authentication process.
+217,The CISS shall ensure that account credential and session tokens are properlyprotected.
+218,The CISS shall lock User accounts for which a configurable number of failed authentication attempts have been made to await administrator action.
+219,Failed authentication attempts shall be logged.
+220,The CISS shall protect authentication details in storage.
+221,"All authentication details shall be stored in either hashed or encrypted form to protect them from exposure, regardless of where they are stored."
+222,Authentication details shall not be hard-coded in any source code.
+223,Decryptionkeys shall be strongly protected to prevent unauthorised access.
+224,The CISS shall protect User credentials in transit.
+225,CISS shall employ encryption of the entire authentication transaction using TSL or similar technologies.
+226,The CISS shall protect session IDs.
+227,The CISS shall not submit authentication and session data as part of a GET request.
+228,Authentication pages shall be marked with all varieties of the no cache tag to prevent use of the back button in the web browser and re-submission of the credentials.
+229,The CISS Web Server functionality shall not act as a proxy. it shall not be possible to use the CISS as a proxy to gain unauthorised access to resources for which the CISS has access to.
+230,"On the hypothesis of an operational time of 24/7/365 (24 hours per day, 7 days a week, 365 days per year), the CISS shall provide a MTTR in accordance with the definition given in Table 12."
+231,"On the hypothesis of an operational time of 24/7/365 (24 hours per day, 7 days a week, 365 days per year), the CISS shall provide a MaxTTR in accordance with the definition given in Table 12 for each single maintenance action."
+232,Any failure or outages of the CISS shall not cause any disruption or Error/ Fault in the NATO CSD ISR Product Library (CIPL) or in the NATO CSD ISR Workflow Services (CIWS).
+233,The video conditioning service providing DASH streaming to web clients (seesection 2. 4) shall run as a completely separate service/ executable.
+234,The CISS main components shall have no dependencies on the video conditioning service.
+235,It shall be possible to install and execute the video conditioning service withouthaving the CISS main components installed.
+236,The delivery of the video conditioning service shall also include a User Interface module for playing videos.
+237,The CISS shall expose (make available for client applications) the WSDL files forall implemented web services at a URL where the URL is ending with WSDL.
+238,"The CISS shall be able to isolate 85% of the possible Faults/Errors which can occur, providing an error diagnostics report which identifies the Error/Fault that has occurred."
+239,"The CISS shall be able to detect 95% of the possible Faults/Errors which can occur, providing a generic diagnostics report which alerts the user that an Error/Fault that has occurred."
+240,The CISS software shall include dedicated and automated test software ( for unit tests) that enables wide-coverage automated regression tests.
+241,"The software modules that are implemented specifically for the CISS, where source code is part of the deliverable, shall include dedicated and automated tests ( unit tests) within the delivered source code to support thorough regression testing."
+242,The video conditioning service providing DASH streaming to web clients (see section 2. 4) shall be implemented using the C [ISO/IEC 23270:2006] programming language.
+243,The CISS User Interface (UI) shall be implemented using the Angular framework(using TypeScript).
+244,The CISS User Interface shall be based on UI components from the NCI Agency CompassUI library of UI components implemented in Angular.
+245,There shall be no Background Intellectual Property Rights for any parts of thevideo conditioning service.
+246,"The source code for the video conditioning service shall be maintained separately from the main CISS component, and shall compile/build separately from the main CISS component."
+247,"The source code for the video playing User Interface module shall be maintained separately from the main CISS User Interface software, and it shall be possible to lift out this video playing module and reuse it in other Web-client applications."
+248,The source code for any custom developed software that the Purchaser shall obtain IPR for (video conditioning service (see section 2. 4) and the user interface application) shall exhibit a Technical Debt Ratio better than 7% when the SQALE method (see [SQALE]) is used for the Debt Ratio estimation.
+249,The rule set and the tool to be used for the Technical Debt Ratio estimation shallbe proposed by the Contractor and approved by the Purchaser.
+250,"The source code for the custom developed software shall be documented with in-line comments written in use ""UK English""."
+251,Custom developed software shall be documented with comments which can be extracted and formatted to augment technical documentation.
+252,Any component of the video conditioning service based on FOSS shall be provided with the source code for the FOSS.
+253,"For 99. 9% of the times that the CISS software is modified for any reason, the modification shall not introduce any error or fault in the existing software."
+254,The CISS shall be capable of being installed and correctly run on multi-processor and multi-core systems.
+255,"The CISS shall be able to execute on a 64-bit operating system for x86-based CPU architecture that is supported by ITM (MS Windows 7 or newer, or latest version of Linux Red Hat)."
+256,The CISS shall comply with a latest versions of the operating system availableand supported by the NATO virtualized servers.
+257,The CISS implementation should be targeted for MS Windows operating system to optimize alignment with ITM.
+258,The CISS implementation should be using latest version of MS SQL Server thatis supported by ITM.
+259,The CISS shall be able to execute in latest official versions of MS Hyper-V Server and latest official versions of VMWare ESXi.
+260,The CISS shall be compatible with a native file system used on NATO virtualized servers.
+261,The CISS shall be able to utilise virtualised data storage provided by the NATOvirtualised environment.
+262,"The CISS shall not have any direct dependency to the physical parameters of the storage environment (such as disk type, connection type, Storage Area Network and protocol) provided by the NATO virtualised environment."
+263,"The CISS shall not have any hardcoded URL, DNS or IP address settings."
+264,"The CISS shall not have any hardcoded Universal Naming Convention (UNC) fornetwork resources, file path, drive letter, or similar storage location settings."
+265,The CISS shall run successfully independent of environment regional settings.
+266,The CISS User Interfaces (as defined in section 2. 5) shall be implemented as web-based applications and shall be able to be run in any Web Browser present on the Approved Fielded Product List (AFPL) at the time of deployment.
+267,The CISS shall support load-balancing solutions as provided by NATO ITModernization (ITM) infrastructure as a service (IaaS).
+268,"If the CISS includes any Free and Open Source Software (FOSS) components, then use of such components shall not limit the deployment or use of the CISS in any way."
+269,The CISS shall support both HTTP and HTTPS.
+270,The CISS shall be interoperable with remotely deployed CISS where all communication is routed through a SATCOM link that has large round-trip delay times.
+271,The CISS shall support Efficient XML Interchange (EXI) for exchange of XMLdata over SATCOM links.
+272,The CISS shall be delivered with an installation wizard enabling easy and correct installation.
+273,The CISS installer should enable a fully automated and complete installationwithout requiring any manual user configuration steps.
+274,The CISS shall when installing a CISS upgrade (newer version) automatically maintain/reuse all configuration settings from the existing CISS installation.
+275,It shall be possible to perform the CISS installation from a remote location.
+276,"The CISS installer shall detect, during installation, if the user has insufficient privileges required for installation ( folder or registry access)."
+277,The CISS installer shall report the details of the access failure to the user before aborting the installation.
+278,"The CISS installer shall detect and appropriately address issues of disk spaceand drives with ""not enough"" space prior to beginning installation."
+279,The CISS installer shall detect and appropriately address a previous installation of the CISS.
+280,"In this case, the installer shall notify the authorised user and prompt if the user wants to upgrade (in case the existing installation is of an earlier version), reinstall, repair or cancel, and proceed accordingly."
+281,It shall be possible to install a new version of the CISS and configure the newly installed CISS to continue operating from an existing and populated CISS database and existing collection of associated stream files (see also [CISS-300]).
+282,The video conditioning service providing DASH streaming to web clients (see section 2. 4) shall have its own separate installer that is separate and independent from the installer of the main CISS component.
+283,The 99. 5% of the time the CISS software is installed and/or uninstalled the system shall comply with the Installation requirement defined in [CISS-290] through [CISS-298] without any failure.
+284,"When replacing a previous version of the CISS, including the existing NATO CSD (Bridging Solution) of baseline Bravo. 1, the streams of the existing CSD stream server shall be imported/ migrated into the new CISS instance and the library identifier of the existing CSD stream server shall be adopted by the new CISS."
+285,For other CSD stream server and client applications on the network the replacement of the existing CSD stream server with the new CISS shall be seamless (i. e. apart from a drop in connectivity during the replacement the switch shall not have any interoperability impact). all other CSD stream server and client applications shall automatically switch over to using the new CISS without needing any configuration changes.
+286,When replacing the existing NATO CSD (Bridging Solution) stream server of baseline Bravo. 1 the CISS shall maintain interoperability.
+287,The 99. 5% of the time the CISS software is installed and/or uninstalled the system shall comply with the Replaceability requirement defined in [CISS-300] through [CISS-302] without any failure. 1 the CISS shall maintain interoperability.
+288,The 99. 5% of the time the CISS software is installed and/or uninstalled the system shall comply with the Replaceability requirement defined in [CISS-300] through [CISS-302] without any failure.
+289,The video conditioning service (see section 2. 5% of its Operational time.
+290,Use of any free and open-source software (FOSS) component shall not requirethe release of custom developed CISS source code.
