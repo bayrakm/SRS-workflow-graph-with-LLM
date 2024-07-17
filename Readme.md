@@ -64,11 +64,7 @@ Each SRS statement contains specific information about the functionality of the 
 
 5. **Decision:** This is the final node that extends the interaction initiated by Actor2. The decision node represents a point in the workflow where a choice or outcome is determined, further extending the interaction flow.
 
-
-<div>
-<img src="[attachment:image.png](https://github.com/user-attachments/assets/b156be83-7a75-40cc-9bd8-6835f0b526c2)" width=800 />
-</div>
-
+![image](https://github.com/user-attachments/assets/f6959939-d052-464a-8888-f7b6b0872497)
 
 #### Aim:
 The primary aim is to take each SRS statement and systematically create these nodes and edges to construct a comprehensive workflow graph. This step is essential as it forms the foundation for visualizing the software's functionality and interactions.
