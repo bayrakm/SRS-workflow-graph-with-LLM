@@ -64,8 +64,9 @@ Each SRS statement contains specific information about the functionality of the 
 
 5. **Decision:** This is the final node that extends the interaction initiated by Actor2. The decision node represents a point in the workflow where a choice or outcome is determined, further extending the interaction flow.
 
+
 <div>
-<img src="attachment:image.png" width=800 />
+<img src="[attachment:image.png](https://github.com/user-attachments/assets/b156be83-7a75-40cc-9bd8-6835f0b526c2)" width=800 />
 </div>
 
 
