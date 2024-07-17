@@ -64,10 +64,7 @@ Each SRS statement contains specific information about the functionality of the 
 
 5. **Decision:** This is the final node that extends the interaction initiated by Actor2. The decision node represents a point in the workflow where a choice or outcome is determined, further extending the interaction flow.
 
-<div>
-<img src="attachment:image.png" width=800 />
-</div>
-
+![image](https://github.com/user-attachments/assets/f6959939-d052-464a-8888-f7b6b0872497)
 
 #### Aim:
 The primary aim is to take each SRS statement and systematically create these nodes and edges to construct a comprehensive workflow graph. This step is essential as it forms the foundation for visualizing the software's functionality and interactions.
@@ -284,19 +281,16 @@ The following code snippets demonstrate how these functions are implemented and 
    - The spring layout algorithm is used to position the nodes.
    - The graph is drawn with nodes, edges, and edge labels, providing a comprehensive view of the interactions.
    - This layout is useful for visualizing more connections but can become cluttered for larger datasets.
-   
-<div>
-<img src="attachment:image.png" width=800 />
-</div>
+![image](https://github.com/user-attachments/assets/036cb8bb-6ac4-4bd9-b76d-96a3aa566d19)
+
 
 3. **Simple Layout Visualization (`workflow_graph`):**
    - A simpler circular layout is used to position the nodes.
    - This layout is effective for smaller datasets, providing a clear and concise view of the workflow.
    - As the number of nodes and connections increases, the graph can become cluttered.
-   
-<div>
-<img src="attachment:image-2.png" width=800 />
-</div>
+
+![image](https://github.com/user-attachments/assets/c7aa60bd-c331-4f5f-8e1d-6f1925267a29)
+
 
 ### Summary:
 
@@ -331,9 +325,10 @@ The following code snippet demonstrates the implementation of the `evaluation_sc
 
 Given the evaluation results and the nature of your ground truth data, it's important to focus on the metrics that provide meaningful insights. As you correctly pointed out, the precision and F1 scores are not informative in this context due to the nature of your ground truth data containing only true values. Similarly, the accuracy score is misleading because it includes True Negatives (TN) and False Positives (FP) in its calculation, which are not relevant here.
 
-<div>
-<img src="attachment:image-2.png" width=500 />
-</div>
+
+![image](https://github.com/user-attachments/assets/d2f09bd9-8319-49b3-a999-8c153cfbfb36)
+
+
 
 Therefore, the most meaningful metrics for your evaluation are the recall score and the number of matched and missed labels. These metrics directly reflect the LLM's ability to correctly identify the workflow components.
 
@@ -348,9 +343,8 @@ Therefore, the most meaningful metrics for your evaluation are the recall score 
 | Decision    | 0.014925 | 1           | 66         | 0.014925  | 1.0       | 0.029412 |
 
 ---
-<div>
-<img src="attachment:image.png" width=800 />
-</div>
+![image](https://github.com/user-attachments/assets/0f2e4ab3-13ea-440c-a299-5ccd58035ad7)
+
 
 Given the evaluation results and the nature of the data, it is reasonable to focus on the most informative components: `Actor1`, `Interaction`, and `Actor2`. The `Decision` node and `Information` edge can be ignored in this evaluation due to the high number of null values, which makes their comparison less valuable.
 
